@@ -1,0 +1,11 @@
+
+opencv-python
+numpy
+torch
+torchvision
+ultralytics
+pytesseract
+Pillow
+pandas
+streamlit
+# Optional baseline (Linux): openalpr or openalpr-python-bindings
