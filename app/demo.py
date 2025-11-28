@@ -5,7 +5,9 @@ from plates.ocr_pytess import ocr_plate
 from plates.track import DwellTracker
 
 VIDEO_PATH = os.environ.get("SP_VIDEO", "data/sample_parking.mp4")
-WEIGHTS    = os.environ.get("SP_WEIGHTS", "weights/plate_yolo.pt" )
+# WEIGHTS    = os.environ.get("SP_WEIGHTS", "weights/plate_yolo.pt" )
+WEIGHTS = "keremberke/yolov8n-license-plate"
+
 
 def main():
     det = PlateDetector(WEIGHTS, conf=0.25)

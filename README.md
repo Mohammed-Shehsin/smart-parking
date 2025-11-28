@@ -18,7 +18,7 @@ pip install -r requirements.txt
 Put a short video at `data/sample_parking.mp4` or use webcam (default fallback).
 
 ```bash
-python app/demo.py
+python app/demoAI.py
 ```
 
 Outputs to `logs/events.csv`.
