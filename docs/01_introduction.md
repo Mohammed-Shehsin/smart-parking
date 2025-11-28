@@ -35,7 +35,7 @@ An AI-based detector enables:
 The system takes RGB images of vehicles.
 Each image is annotated with a bounding box around the license plate using YOLO format:
 
-'' class x_center y_center width height ''
+``class x_center y_center width height``
 
 
 All coordinates are normalized (0–1).
