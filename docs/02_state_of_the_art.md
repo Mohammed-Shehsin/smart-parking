@@ -1,7 +1,5 @@
 # 02 — State of the Art
 
-
-```markdown
 # License Plate Detection Project — YOLOv8n
 
 This project reviews three AI approaches for license plate detection and implements a modern lightweight YOLOv8 model for real-world performance.
@@ -86,8 +84,7 @@ car_plate_data/
 └── test/
 ├── images/
 └── labels/
-
-````
+```
 
 ### Example `data.yaml`
 
@@ -234,5 +231,4 @@ All datasets and pretrained models are subject to their respective licenses.
 * Google Colab GPU
 * Dataset contributors
 
-```
-```
+
