@@ -16,19 +16,19 @@ These metrics confirm that YOLOv8n is highly effective even with lightweight con
 ## 4.2 Example Detection Outputs
 
 Example YOLOv8n predictions:
-
+```
 plate 0.85
 (bounding box visualized)
-
+```
 
 Detected outputs were saved in:
-
+```
 runs/detect/predict/
-
+```
 
 
 Sample structure:
-
+```
 smart-parking/
 ├── runs/
 │ └── detect/
@@ -36,7 +36,7 @@ smart-parking/
 │ ├── images.jpg
 │ └── sample.jpeg
 
-
+```
 
 ---
 
@@ -49,11 +49,11 @@ After integrating OCR, the system performs:
 3. Text extraction  
 
 Example output in `results.csv`:
-
+```
 image,crop,text,confidence
 car1.jpg,car1_plate_0.jpg,KA 64 N 0G99,0.85
 car2.jpg,car2_plate_0.jpg,DL 03 AB 5544,0.91
-
+```
 
 OCR successfully reads clear plates and performs consistently across typical lighting conditions.
 
