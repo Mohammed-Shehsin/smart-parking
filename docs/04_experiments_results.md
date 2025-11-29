@@ -58,8 +58,33 @@ car2.jpg,car2_plate_0.jpg,DL 03 AB 5544,0.91
 OCR successfully reads clear plates and performs consistently across typical lighting conditions.
 
 ---
+## 4.4 Input vs Output Comparison (YOLOv8 + ANPR)
 
-## 4.4 Qualitative Visual Results
+The table below shows the original input images (left) and the corresponding YOLOv8 detection results (right).  
+This gives a clear visual understanding of how the model processes and transforms real-world images.
+
+### **Comparison Table**
+
+| Input Image | YOLOv8 Detection Output |
+|-------------|--------------------------|
+| <img src="../images/images.jpeg" width="350"> | <img src="../anpr_results/detections/images.jpeg" width="350"> |
+| <img src="../images/images2.jpg" width="350"> | <img src="../anpr_results/detections/images2.jpg" width="350"> |
+| <img src="../images/images3.jpg" width="350"> | <img src="../anpr_results/detections/images3.jpg" width="350"> |
+| <img src="../images/images4.jpeg" width="350"> | <img src="../anpr_results/detections/images4.jpeg" width="350"> |
+| <img src="../images/photo-1687039588464-09f1b52208c7.jpeg" width="350"> | <img src="../anpr_results/detections/photo-1687039588464-09f1b52208c7.jpeg" width="350"> |
+
+### **What the Output Shows**
+Each detection output includes:
+- A bounding box drawn around the license plate  
+- A confidence score (e.g., *plate 0.85*)  
+- If ANPR OCR is enabled: extracted text displayed near the plate  
+
+This format clearly demonstrates the improvement from raw input to AI-processed output.
+
+---
+
+
+## 4.5 Qualitative Visual Results
 
 - Correct bounding box placement  
 - Accurate cropping  
@@ -69,7 +94,7 @@ These results demonstrate the feasibility of a full ANPR pipeline using lightwei
 
 ---
 
-## 4.5 Local Execution
+## 4.6 Local Execution
 
 To run inference locally:
 ```
