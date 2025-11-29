@@ -26,10 +26,9 @@ By leveraging YOLOv8 for plate detection and OCR for text interpretation, the pr
 ## Input Data
 The model processes **RGB images** containing cars. Each training image includes YOLO-format annotations:
 
-class x_center y_center width height
+`` class x_center y_center width height ``
 
-pgsql
-Copy code
+
 
 Values are normalized between 0 and 1.  
 In the enhanced pipeline, the detected plate region becomes the input for OCR, enabling full number-plate reading.
