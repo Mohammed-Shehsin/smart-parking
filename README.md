@@ -90,6 +90,7 @@ Windows: Install from: https://github.com/UB-Mannheim/tesseract/wiki
 ▶️ Run ANPR Demo (Plates + Dwell Time)
 
 ``` python app/demoAI.py ```
+
 Outputs:
 
 ```
@@ -118,14 +119,14 @@ Detection images
 Full academic documentation is available under:
 
 📁 docs/
-
+```
 Chapter	Description
 01 — Introduction	Project goals, motivation
 02 — State of the Art	Literature review & existing methods
 03 — Method & System Design	YOLOv8 pipeline + OCR + occupancy
 04 — Experiments & Results	Detection results, comparisons, ANPR outputs
 05 — Discussion & Limitations	Analysis and future work
-
+```
 Direct link:
 🔗 View Documentation Folder
 
@@ -141,37 +142,36 @@ This gives a clear visual understanding of how the model processes and transform
 
 | Input Image | YOLOv8 Detection Output |
 |-------------|--------------------------|
-| <img src="../images/images.jpeg" width="350"> | <img src="../anpr_results/detections/images.jpeg" width="350"> |
-| <img src="../images/images2.jpg" width="350"> | <img src="../anpr_results/detections/images2.jpg" width="350"> |
-| <img src="../images/images3.jpg" width="350"> | <img src="../anpr_results/detections/images3.jpg" width="350"> |
-| <img src="../images/images4.jpeg" width="350"> | <img src="../anpr_results/detections/images4.jpeg" width="350"> |
-| <img src="../images/photo-1687039588464-09f1b52208c7.jpeg" width="350"> | <img src="../anpr_results/detections/photo-1687039588464-09f1b52208c7.jpeg" width="350"> |
+| <img src="images/images.jpeg" width="350"> | <img src="anpr_results/detections/images.jpeg" width="350"> |
+| <img src="images/images2.jpg" width="350"> | <img src="anpr_results/detections/images2.jpg" width="350"> |
+| <img src="images/images3.jpg" width="350"> | <img src="anpr_results/detections/images3.jpg" width="350"> |
+| <img src="images/images4.jpeg" width="350"> | <img src="anpr_results/detections/images4.jpeg" width="350"> |
+| <img src="images/photo-1687039588464-09f1b52208c7.jpeg" width="350"> | <img src="anpr_results/detections/photo-1687039588464-09f1b52208c7.jpeg" width="350"> |
 
 
 Download separately:
-
+```
 Parking Occupancy: PKLot, CNRPark-EXT
 
 Plate Recognition: CCPD, OpenALPR benchmarks
 
 Place datasets accordingly under project folders.
+```
 
-📝 License
+## License
 MIT License — free to use, modify, and distribute.
 
-✔️ Project Status
+## Project Status
 Fully working prototype with:
 
-Parking bay occupancy
+0. Parking bay occupancy
 
-YOLOv8 license plate detection
+1. YOLOv8 license plate detection
 
-OCR + dwell time logging
+2. OCR + dwell time logging
 
-Batch and real-time processing
+3. Batch and real-time processing
 
-Complete academic documentation
+4. Complete academic documentation
 
-Further improvements planned in segmentation, OCR accuracy, and edge deployment.
-
-```
+5. Further improvements planned in segmentation, OCR accuracy, and edge deployment.
