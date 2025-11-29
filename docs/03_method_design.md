@@ -32,15 +32,13 @@ car_plate_data/
 └── labels/
 
 ```
-
-`data.yaml`:
-
+```
 path: car_plate_data
 train: train/images
 val: test/images
 nc: 1
 names: ['plate']
-
+```
 ## 3.3 Model Architecture
 YOLOv8 performs two key tasks:
 
@@ -104,10 +102,12 @@ Applies OCR
 
 Saves results to:
 
+``` 
 anpr_results/
    crops/
    detections/
-   results.csv
+   results.csv 
+   ```
 This enables scalable processing across large datasets.
 
 
