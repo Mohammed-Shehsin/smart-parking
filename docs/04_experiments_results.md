@@ -50,6 +50,20 @@ smart-parking/images/
 ```
 
 These files demonstrate successful inference and bounding box detection.
+---
+
+## 📸 Example Results
+
+<p align="center">
+  <img src="../images/images.jpeg" width="25%" />
+  <img src="../runs/detect/predict/images.jpg" width="25%" />
+</p>
+
+<p align="center">
+  <b>Left: Original Input | Right: YOLOv8n Detection</b>
+</p>
+
+
 
 ---
 
