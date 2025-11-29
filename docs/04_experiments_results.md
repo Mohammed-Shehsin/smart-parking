@@ -1,133 +1,85 @@
 # 04 — Experiments & Results
 
+## 4.1 YOLOv8 Detection Performance
 
-- **mAP50:** ~0.90
-- **mAP50-95:** ~0.55
-- **Confidence example:** `plate (0.85)`
-- **Inference time:** ~8 ms / image on CPU
+Training results show strong detection performance:
 
-The model successfully detects vehicle license plates with high confidence.  
-Below are sample results from YOLOv8n inference.
+- **mAP50:** ~0.90  
+- **mAP50–95:** ~0.55  
+- **Inference speed (CPU):** ~8 ms/image  
+- **Typical confidence scores:** 0.80–0.95  
+
+These metrics confirm that YOLOv8n is highly effective even with lightweight configuration.
 
 ---
 
-### 🖼️ Example Detections
+## 4.2 Example Detection Outputs
 
-```
+Example YOLOv8n predictions:
 
 plate 0.85
+(bounding box visualized)
 
-* bounding box visible
 
-```
-
-> The detection outputs are saved under:
-```
+Detected outputs were saved in:
 
 runs/detect/predict/
 
-```
 
-Example repository directory view (results stored):
-```
+
+Sample structure:
 
 smart-parking/
 ├── runs/
-│   └── detect/
-│       └── predict/
-│           ├── images.jpg
-│           └── photo-1687039588464-09f1b52208c7.jpg
-
-```
-
-Sample input test images stored in:
-```
-
-smart-parking/images/
-├── images.jpeg
-└── photo-1687039588464-09f1b52208c7.jpeg
-
-```
-
-These files demonstrate successful inference and bounding box detection.
----
-
-## 📸 Example Results
-
-<p align="center">
-  <img src="../images/images.jpeg" width="25%" />
-  <img src="../runs/detect/predict/images.jpg" width="25%" />
-</p>
-
-<p align="center">
-  <b>Left: Original Input | Right: YOLOv8n Detection</b>
-</p>
+│ └── detect/
+│ └── predict/
+│ ├── images.jpg
+│ └── sample.jpeg
 
 
 
 ---
 
-## 🖥️ Running the Model Locally (Inference Only)
+## 4.3 End-to-End ANPR Results (New)
 
-1. Place your trained model:
+After integrating OCR, the system performs:
+
+1. Plate detection  
+2. Plate cropping  
+3. Text extraction  
+
+Example output in `results.csv`:
+
+image,crop,text,confidence
+car1.jpg,car1_plate_0.jpg,KA 64 N 0G99,0.85
+car2.jpg,car2_plate_0.jpg,DL 03 AB 5544,0.91
+
+
+OCR successfully reads clear plates and performs consistently across typical lighting conditions.
+
+---
+
+## 4.4 Qualitative Visual Results
+
+- Correct bounding box placement  
+- Accurate cropping  
+- OCR extraction with high readability  
+
+These results demonstrate the feasibility of a full ANPR pipeline using lightweight tools.
+
+---
+
+## 4.5 Local Execution
+
+To run inference locally:
 ```
-
-best.pt
-
-````
-in the main project folder.
-
----
-
-### 1️⃣ Install Ultralytics
-
-```bash
-pip install ultralytics
-````
-
----
-
-### 2️⃣ Create `demoAI.py`
-
-```python
-from ultralytics import YOLO
-from pathlib import Path
-
-model = YOLO("best.pt")
-image_dir = Path("images")
-
-results = model.predict(source=str(image_dir), save=True)
-print("Output saved in runs/detect/predict/")
-```
-
----
-
-### 3️⃣ Run the script
-
-```bash
+pip install ultralytics easyocr
 python demoAI.py
+
 ```
-
----
-
-### 4️⃣ Output Location
-
-All inference images will be saved automatically to:
-
+Outputs stored under:
 ```
 runs/detect/predict/
 ```
-
-You will see bounding boxes drawn directly onto the images.
-
----
-
-## ✔️ Summary
-
-* YOLOv8n performs well on license plate detection.
-* Accuracy is high (mAP50 ≈ 0.90) even with a small dataset.
-* Very fast inference and suitable for CPU deployment.
-* Predictions saved automatically in the `runs/detect/predict/` directory.
-
 
 ---

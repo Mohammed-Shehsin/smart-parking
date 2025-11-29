@@ -1,53 +1,45 @@
 # 01 — Introduction
 
 ## Goal
+The objective of this project is to develop an intelligent system capable of **automatically detecting vehicle license plates** from RGB images using modern deep-learning–based object detection techniques. The system highlights the plate region using bounding boxes and forms the core component of an extended ANPR (Automatic Number Plate Recognition) pipeline.
 
-Develop an AI model capable of automatically detecting car number plates from images by drawing bounding boxes around the plate region.
+In its enhanced form, the project also integrates an **OCR-based text extraction step**, enabling the system not only to detect plates but also to **read and interpret their alphanumeric content**.
 
 ## Motivation
+License plate detection plays a central role in modern transportation and safety infrastructure:
 
-Automatic license plate detection is a core module for modern Intelligent Transportation Systems, including:
+- Smart parking systems and toll automation  
+- Highway traffic monitoring  
+- Police enforcement and vehicle search  
+- Smart city surveillance  
+- Entry/exit automation for residential or industrial zones  
 
-- Toll & parking automation
+Traditional manual monitoring is slow, expensive, and prone to human error. An automated system enables:
 
-- Highway traffic monitoring
+- High-speed and reliable plate localization  
+- Scalability across thousands of daily vehicles  
+- Integration with OCR for complete ANPR pipelines  
+- Real-time decision-making and enforcement  
 
-- Police enforcement systems
-
-- Smart city surveillance
-
-- ANPR (Automatic Number Plate Recognition)
-
-- Manual monitoring is slow, costly, and error-prone.
-
-An AI-based detector enables:
-
-- Real-time vehicle analysis
-
-- Automation at scale
-
-- Consistent accuracy
-
-- Integration with OCR for full ANPR pipelines
+By leveraging YOLOv8 for plate detection and OCR for text interpretation, the project demonstrates how AI can automate key traffic-management tasks.
 
 ## Input Data
+The model processes **RGB images** containing cars. Each training image includes YOLO-format annotations:
 
-The system takes RGB images of vehicles.
-Each image is annotated with a bounding box around the license plate using YOLO format:
+class x_center y_center width height
 
-``class x_center y_center width height``
+pgsql
+Copy code
 
-
-All coordinates are normalized (0–1).
+Values are normalized between 0 and 1.  
+In the enhanced pipeline, the detected plate region becomes the input for OCR, enabling full number-plate reading.
 
 ## AI Domain & Task Type
 
-Domain: Artificial Intelligence → Computer Vision
-
-Subfield: Object Detection
-
-Model Type: Convolutional Neural Network (CNN)
-
-Technique: Single-class detection (“plate”)
-
-Task: Bounding box regression + object classification
+**Domain:** Artificial Intelligence → Computer Vision  
+**Subfield:** Object Detection & OCR  
+**Model Type:** Convolutional Neural Networks (YOLOv8) + OCR (EasyOCR)  
+**Tasks:**  
+- Bounding box regression  
+- Object classification  
+- Text extraction (OCR)

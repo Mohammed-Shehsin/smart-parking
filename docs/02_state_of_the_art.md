@@ -1,234 +1,63 @@
 # 02 — State of the Art
 
-# License Plate Detection Project — YOLOv8n
+This section reviews existing academic and industrial approaches to license plate detection and recognition. Three primary categories were evaluated.
 
-This project reviews three AI approaches for license plate detection and implements a modern lightweight YOLOv8 model for real-world performance.
+## 2.1 Classical Computer Vision (Haar Cascades)
+Early ANPR relied on handcrafted feature extractors such as Haar cascades, edge detection, and morphology-based segmentation.
 
----
+### Strengths
+- Very fast and lightweight  
+- Works on low-power embedded hardware  
+- Simple to implement  
 
-## 📦 Approaches Reviewed
+### Weaknesses
+- Fails under variations in lighting, angle, shadow, or noise  
+- Highly sensitive to plate design diversity  
+- Poor generalization across countries  
 
-### 1. Classical Computer Vision (Haar Cascades)
-
-**How it works:**  
-Uses handcrafted features (Haar filters) and AdaBoost classifier.
-
-**Strengths**
-- Very fast
-- Low computational cost
-- Easy to implement
-
-**Weaknesses**
-- Extremely sensitive to lighting, angle, blur
-- Fails for modern diverse plate designs
-- Outdated for real-world use
+Although historically important, classical CV is **insufficient for modern ANPR workloads**.
 
 ---
 
-### 2. Deep Learning CNN Detectors (Faster R-CNN, YOLOv3/v5)
+## 2.2 CNN-based Detectors (Faster R-CNN, YOLOv3/v5)
+The introduction of deep convolutional networks significantly improved detection accuracy.
 
-**How it works:**  
-CNN backbone extracts features → region proposals → bounding box classification.
+### Strengths
+- Good robustness to noise and illumination  
+- Reasonable generalization to different plate styles  
+- Strong academic benchmark performance  
 
-**Strengths**
-- Good accuracy
-- Robust to lighting and rotation
-- Works on standard datasets
-
-**Weaknesses**
-- Heavier model, slower
-- Training requires GPU
-- Complex pipeline
+### Weaknesses
+- Relatively slower inference  
+- Computationally expensive  
+- More complex training pipelines  
 
 ---
 
-### 3. Modern YOLO Architectures (YOLOv7, YOLOv8)
+## 2.3 Single-Shot Detectors: YOLOv7 / YOLOv8
+YOLOv8 represents the latest generation of one-stage object detectors, optimized for both accuracy and real-time performance.
 
-**How it works:**  
-One-stage end-to-end object detection (no region proposal stage).
+### Strengths
+- Excellent inference speed  
+- High accuracy even with lightweight models  
+- Easy training and deployment  
+- Suitable for edge devices  
 
-**Strengths**
-- State-of-the-art performance
-- Very fast inference
-- Excellent for real-time systems
-- Clean training pipeline
-
-**Weaknesses**
-- Requires annotated dataset
-- GPU highly recommended for training
-- Detects object only — OCR still needed
+### Weaknesses
+- Requires high-quality labeled datasets  
+- Detection alone is insufficient for full ANPR (needs OCR)  
 
 ---
 
-## 🚀 Chosen Implementation: YOLOv8n (Ultralytics)
+## 2.4 OCR Approaches
+License plate reading requires a second stage: text recognition. Three OCR families were analyzed:
 
-**Why YOLOv8n?**
-- Lightweight & fast
-- Very high accuracy for single-class detection
-- Perfect for student projects
-- Easy deployment on CPU
-- Excellent documentation & tooling
+| Method | Description | Pros | Cons |
+|-------|-------------|------|------|
+| **Tesseract** | Classical OCR using rule-based segmentation | Lightweight | Poor on noisy/angled plates |
+| **EasyOCR** | CNN-based deep learning OCR | Strong generalization, multilingual | Slightly slower |
+| **CRNN / LSTM Models** | End-to-end trainable recognition | Highest performance | Requires large training datasets |
 
----
-
-## 📁 Dataset Format (YOLO)
-
-```
-
-car_plate_data/
-│
-├── data.yaml
-├── train/
-│   ├── images/
-│   └── labels/
-└── test/
-├── images/
-└── labels/
-```
-
-### Example `data.yaml`
-
-```yaml
-path: car_plate_data
-train: train/images
-val: test/images
-
-nc: 1
-names: ['plate']
-````
-
-YOLO label format:
-
-```
-class x_center y_center width height
-```
-
-All values are normalized (0–1).
+**EasyOCR** was selected for this project due to simplicity, robustness, and ability to process real-world plates without retraining.
 
 ---
-
-## 🧠 Model Architecture
-
-YOLOv8 performs two tasks in a single forward pass:
-
-* **Bounding box regression**
-* **Object classification**
-
-Key components:
-
-* **Convolutional backbone**
-* **C2f blocks (improved CSPNet-like)**
-* **PAN/FPN neck**
-* **Detection head**
-
-Advantages:
-
-* High resolution multi-scale feature fusion
-* Extremely fast inference
-* Minimal post-processing overhead
-
----
-
-## 🛠️ Training Setup
-
-**Platform:** Google Colab (T4 GPU)
-**Epochs:** 30
-**Image size:** 640×640
-**Batch size:** 16
-**Optimizer:** Adam
-**Loss:** YOLO detection loss
-
----
-
-## ▶️ Training Command
-
-```python
-from ultralytics import YOLO
-
-model = YOLO("yolov8n.pt")
-model.train(
-    data="car_plate_data/data.yaml",
-    epochs=30,
-    imgsz=640,
-    batch=16,
-    name="plate_yolov8n"
-)
-```
-
----
-
-## 🔎 Inference Example
-
-```python
-from ultralytics import YOLO
-
-model = YOLO("runs/detect/plate_yolov8n/weights/best.pt")
-results = model("test/images/sample.jpg")
-results.show()
-```
-
----
-
-## 📊 Evaluation Metrics
-
-Recommended metrics:
-
-* mAP@0.5
-* mAP@0.5:0.95
-* Precision
-* Recall
-* FPS / latency
-
----
-
-## 📌 OCR Integration (Future Work)
-
-Detection provides the bounding box of the plate.
-To extract the text, integrate OCR:
-
-Options:
-
-* EasyOCR
-* Tesseract OCR
-* PaddleOCR
-
-**Pipeline:**
-
-1. Detect license plate → crop region
-2. Run crop through OCR model
-3. Clean/validate detected string
-
----
-
-## 🛠️ Deployment Notes
-
-* YOLOv8n can run on CPU
-* Export formats supported:
-
-  * ONNX
-  * TensorRT
-  * CoreML
-  * OpenVINO
-
-Example export command:
-
-```bash
-yolo export model=runs/detect/plate_yolov8n/weights/best.pt format=onnx
-```
-
----
-
-## 📜 License
-
-Educational project.
-All datasets and pretrained models are subject to their respective licenses.
-
----
-
-## 🙏 Acknowledgements
-
-* Ultralytics YOLOv8
-* Google Colab GPU
-* Dataset contributors
-
-
