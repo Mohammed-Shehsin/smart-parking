@@ -1,142 +1,203 @@
-# Smart Parking System  
-### Occupancy Detection + License Plate ANPR (Dwell Time Logging)
 
-This project implements a **two-module intelligent parking system** combining **computer vision**, **deep learning**, and **OCR-based license plate recognition**.
+# Smart Parking IoT System  
+### Occupancy Detection & License Plate ANPR with Edge AI
 
-The goal is to automate:
-- **Parking bay occupancy detection**
-- **Vehicle identification using license plates**
+This repository presents an **IoT-enabled Smart Parking System** that integrates **edge AI**, **computer vision**, and **optical character recognition (OCR)** to automate parking monitoring and vehicle identification.
 
-The system includes **real-time processing**, **batch ANPR**, and **complete documentation** of methodology, experiments, and results.
+The system is designed as a **modular IoT architecture**, where camera nodes perform on-device intelligence and generate structured data that can be transmitted to higher-level parking management platforms.
 
 ---
 
-# 🚗 **Project Overview**
+## 🌐 IoT System Motivation
 
-### **Module 1 — Parking Occupancy Detection**
-Uses:
-- Predefined **parking bay polygons**
-- Lightweight CNN classifier / image differencing
-- Frame-by-frame status logging (occupied / free)
+Modern smart cities require:
+- Real-time parking availability
+- Vehicle identification and dwell-time monitoring
+- Low-latency, low-cost edge intelligence
 
-Applications:
-- Smart parking dashboards  
-- Occupancy analytics  
-- Space availability systems  
+This project demonstrates how **lightweight AI models running on edge devices** (PC / embedded Linux / future Raspberry Pi or Jetson) can be used as **IoT perception nodes** for smart parking infrastructure.
 
 ---
 
-### **Module 2 — License Plate Detection & ANPR**
-Pipeline:
-1. **YOLOv8** → License plate detection  
-2. **Plate cropping**  
-3. **OCR** (PyTesseract primary, EasyOCR optional baseline)  
-4. **Text extraction**  
-5. **Dwell time calculation** per vehicle  
+## 🧠 System Architecture (IoT Perspective)
 
-Outputs are logged to:
-`` logs/events.csv ``
+### Edge Layer (Perception Node)
+Runs locally on the device:
+- Camera input
+- AI inference
+- OCR processing
+- Data logging
+
+### Application Layer
+- Parking status visualization
+- Vehicle dwell-time analysis
+- Event logging
+
+### (Future) Cloud / Server Layer
+- Aggregation of multiple parking nodes
+- Long-term analytics
+- Dashboard & alerts
 
 ---
 
-# 📂 **Repository Structure**
+## 🚗 Functional Modules
+
+### Module 1 — Parking Occupancy Detection
+Detects whether a parking bay is **occupied or free**.
+
+**IoT relevance:**
+- Each camera acts as a sensor node
+- Outputs binary occupancy status
+- Suitable for real-time updates
+
+**Techniques used:**
+- Predefined parking bay polygons
+- Lightweight CNN / image differencing
+- Frame-based status evaluation
+
+---
+
+### Module 2 — License Plate Detection & ANPR (Edge AI)
+Performs **Automatic Number Plate Recognition (ANPR)** directly on the edge device.
+
+**Pipeline:**
+1. Camera frame acquisition  
+2. **YOLOv8** license plate detection  
+3. Plate cropping (OpenCV)  
+4. **OCR** (EasyOCR / PyTesseract)  
+5. Structured output generation  
+
+**Generated data:**
+- Plate text
+- Detection confidence
+- Timestamp
+- Vehicle dwell time
+
+---
+
+## 📊 Experimental Results (Edge Inference)
+
+From local inference tests:
+
+- **Total detections:** 90  
+- **Unique images processed:** 82  
+- **Mean detection confidence:** ~0.73  
+- **Maximum confidence:** ~0.92  
+
+The system demonstrates reliable plate detection and OCR extraction under normal lighting and viewing conditions.
+
+📄 Detailed analysis is available in:
+```
+
+docs/04_experiments_results.md
 
 ```
+
+---
+
+## 📂 Repository Structure
+
+```
+
 smart-parking/
 │
-├── parking/ # Occupancy detection module
-├── plates/ # YOLO-based plate detection + OCR
-├── app/ # Demo applications (video + webcam)
-│ └── demoAI.py
+├── parking/            # Parking occupancy detection (IoT perception)
+├── plates/             # License plate detection + OCR
+├── app/                # Edge demo applications
+│   └── demoAI.py
 │
-├── anpr_results/ # Detection outputs, crops, and OCR results
-│ ├── crops/
-│ └── detections/
+├── anpr_results/       # Edge-generated outputs
+│   ├── crops/          # Cropped license plates
+|   ├── plots/          # plotted results
+│   └── detections/     # Annotated detection images
 │
-├── docs/ # Full academic project documentation
-│ ├── 01_introduction.md
-│ ├── 02_state_of_the_art.md
-│ ├── 03_method_design.md
-│ ├── 04_experiments_results.md
-│ └── 05_discussion_limitations.md
+├── docs/               # Academic documentation
+│   ├── 01_introduction.md
+│   ├── 02_state_of_the_art.md
+│   ├── 03_method_design.md
+│   ├── 04_experiments_results.md
+│   └── 05_discussion_limitations.md
 │
-├── images/ # Raw input images (for docs & ANPR testing)
-├── logs/ # Dwell time & detection records
-│ └── events.csv
-│
-└── README.md # Main landing page 
-```
+├── images/             # Sample IoT camera inputs
+├── logs/               # Event & dwell-time logs
+│   └── events.csv
+├── src/                # Python files
+└── README.md
+
+````
 
 ---
 
-# 🚀 **Quick Start**
+## 🚀 Quick Start (IoT Edge Node Setup)
 
-### 1. Create virtual environment
-```
+### 1. Create Virtual Environment
+```bash
 python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-Install Python dependencies
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+````
+
+### 2. Install OCR Engine
+
+* **Linux:** `sudo apt install tesseract-ocr`
+* **macOS:** `brew install tesseract`
+* **Windows:**
+  [https://github.com/UB-Mannheim/tesseract/wiki](https://github.com/UB-Mannheim/tesseract/wiki)
+
+---
+
+## ▶️ Run Edge ANPR Node
+
+```bash
+python demoAI.py
 ```
 
-3. Install Tesseract OCR Engine
-
-Linux: ``` sudo apt install tesseract-ocr ```
-
-macOS:  ```brew install tesseract ```
-
-Windows: Install from: https://github.com/UB-Mannheim/tesseract/wiki
-
-▶️ Run ANPR Demo (Plates + Dwell Time)
-
-``` python app/demoAI.py ```
-
-Outputs:
+**Edge outputs generated:**
 
 ```
-logs/events.csv
 anpr_results/detections/
 anpr_results/crops/
+anpr_results/results.csv
+logs/events.csv
+```
 
-```
-🔍 Run Batch ANPR on a Folder of Images
-```
+These outputs can be transmitted to a central server or dashboard in a full IoT deployment.
+
+---
+
+## 🔍 Batch Processing (Offline IoT Mode)
+
+```bash
 python anpr_batch.py
 ```
 
-This generates:
+Processes all images in a folder and generates:
 
-Cropped plates
+* Annotated detection images
+* Plate crops
+* OCR results with confidence scores
 
-Detection images
+---
 
-``` anpr_results/results.csv ``` with plate text and confidence
+## 📘 Documentation
 
+Full academic and technical documentation is available in:
 
-
-
-📘 Documentation
-Full academic documentation is available under:
-
-📁 docs/
 ```
-Chapter	Description
-01 — Introduction	Project goals, motivation
-02 — State of the Art	Literature review & existing methods
-03 — Method & System Design	YOLOv8 pipeline + OCR + occupancy
-04 — Experiments & Results	Detection results, comparisons, ANPR outputs
-05 — Discussion & Limitations	Analysis and future work
+docs/
 ```
-Direct link:
-🔗 View Documentation Folder
 
-📸 Sample Results
-Detection + OCR (ANPR):
+| Chapter                       | Content                             |
+| ----------------------------- | ----------------------------------- |
+| 01 — Introduction             | Problem definition & motivation     |
+| 02 — State of the Art         | Related IoT & vision systems        |
+| 03 — Method Design            | Edge AI pipeline design             |
+| 04 — Experiments & Results    | Quantitative & qualitative analysis |
+| 05 — Discussion & Limitations | Constraints & future work           |
 
-## Input vs Output Comparison (YOLOv8 + ANPR)
+---
 
-The table below shows the original input images (left) and the corresponding YOLOv8 detection results (right).  
-This gives a clear visual understanding of how the model processes and transforms real-world images.
+## 📸 Sample IoT Edge Results
 
 ### **Comparison Table**
 
@@ -148,30 +209,49 @@ This gives a clear visual understanding of how the model processes and transform
 | <img src="images/images4.jpeg" width="350"> | <img src="anpr_results/detections/images4.jpeg" width="350"> |
 | <img src="images/photo-1687039588464-09f1b52208c7.jpeg" width="350"> | <img src="anpr_results/detections/photo-1687039588464-09f1b52208c7.jpeg" width="350"> |
 
+---
 
-Download separately:
+## 📦 Datasets (External)
+
 ```
-Parking Occupancy: PKLot, CNRPark-EXT
+Parking Occupancy:
+- PKLot
+- CNRPark-EXT
 
-Plate Recognition: CCPD, OpenALPR benchmarks
-
-Place datasets accordingly under project folders.
+License Plate Recognition:
+- CCPD
+- OpenALPR benchmarks
 ```
 
-## License
-MIT License — free to use, modify, and distribute.
+Datasets are **not included** and must be downloaded separately.
 
-## Project Status
-Fully working prototype with:
+---
 
-0. Parking bay occupancy
+## 🔮 Future IoT Extensions
 
-1. YOLOv8 license plate detection
+* MQTT / HTTP data publishing
+* Multi-camera parking networks
+* Edge deployment on Raspberry Pi / Jetson
+* Cloud dashboard integration
+* Vehicle re-identification across nodes
 
-2. OCR + dwell time logging
+---
 
-3. Batch and real-time processing
+## 📜 License
 
-4. Complete academic documentation
+MIT License — free to use, modify, and deploy.
 
-5. Further improvements planned in segmentation, OCR accuracy, and edge deployment.
+---
+
+## 📌 Project Status
+
+✅ Functional IoT edge prototype
+✅ Real-time & batch ANPR
+✅ Occupancy detection
+✅ Structured data output
+✅ Academic documentation complete
+
+This project serves as a **foundation for scalable smart-parking IoT systems**.
+
+```
+
