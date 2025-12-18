@@ -1,0 +1,22 @@
+ANPR Inference Summary
+=====================
+
+Total detections: 90
+Unique images: 82
+Mean confidence: 0.7308
+Median confidence: 0.7969
+Min confidence: 0.2570
+Max confidence: 0.9172
+
+Top images by avg confidence:
+image
+Cars33.png     0.917210
+Cars210.png    0.890177
+Cars254.png    0.886464
+Cars208.png    0.886007
+Cars355.png    0.880606
+Cars178.png    0.880415
+Cars419.png    0.871913
+Cars276.png    0.865936
+Cars109.png    0.865936
+Cars320.png    0.861564

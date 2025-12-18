@@ -9,7 +9,7 @@ import csv
 # CONFIGURATION
 # -----------------------------
 MODEL_PATH = "best.pt"
-INPUT_FOLDER = "images"              # folder with your car images
+INPUT_FOLDER = "License-Plate-Data/test/images"              # folder with your car images
 OUTPUT_FOLDER = "anpr_results"       # main output directory
 
 CROPS_FOLDER = f"{OUTPUT_FOLDER}/crops"

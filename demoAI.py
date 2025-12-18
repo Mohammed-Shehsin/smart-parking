@@ -6,7 +6,7 @@ def main():
     model = YOLO("best.pt")
 
     # Folder with test images
-    image_dir = Path("images")
+    image_dir = Path("License-Plate-Data/test/images")
 
     # Run detection on all jpg/pngs in images/
     results = model.predict(
